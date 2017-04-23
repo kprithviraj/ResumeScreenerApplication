@@ -2,7 +2,6 @@ package com.darwinBox.service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import com.darwinBox.model.Person;
 import org.codehaus.jackson.JsonGenerationException;
@@ -20,12 +19,13 @@ public class PersonService {
 	
 	public static final String COLLECTION_NAME = "person";
 	
-	public void addPerson(Person person) {
+	public String addPerson(Person person) {
 		if (!mongoTemplate.collectionExists(Person.class)) {
 			mongoTemplate.createCollection(Person.class);
 		}		
-		person.setId(UUID.randomUUID().toString());
 		mongoTemplate.insert(person, COLLECTION_NAME);
+
+		return person.getId();
 	}
 	
 	public List<Person> listPerson() {

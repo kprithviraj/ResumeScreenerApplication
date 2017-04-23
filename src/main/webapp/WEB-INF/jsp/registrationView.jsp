@@ -4,11 +4,10 @@
 <html lang="en">
 <head>
 <title>Darwin Registration</title>
-
-<spring:url value="/resources/core/css/hello.css" var="coreCss" />
-<spring:url value="/resources/core/css/bootstrap.min.css" var="bootstrapCss" />
-<link href="${bootstrapCss}" rel="stylesheet" />
-<link href="${coreCss}" rel="stylesheet" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 </head>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -23,7 +22,7 @@
         <div class="row">
 
             <div class="col-md-8 col-md-offset-2">
-                <form role="form" method="POST" action="#">
+                <form role="form" method="POST" action="uploadFile" enctype="multipart/form-data">
 
                     <legend class="text-center">Register</legend>
 
@@ -32,7 +31,7 @@
 
                         <div class="form-group col-md-6">
                             <label for="first_name">First name</label>
-                            <input type="text" class="form-control" name="" id="first_name" placeholder="First Name">
+                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="First Name">
                         </div>
 
                         <div class="form-group col-md-6">
@@ -42,12 +41,17 @@
 
                         <div class="form-group col-md-12">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="" id="email" placeholder="Email">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="">Phone</label>
+                            <input type="phone" class="form-control" name="phone" id="phone" placeholder="Phone">
                         </div>
 
                         <div class="form-group col-md-12">
                             <label for="">Upload CV</label>
-                            <input class="btn " type= "file" id="file" type="text" name="filePath">
+                            <input class="btn" type= "file" name="file" id="file" type="text" name="filePath">
                         </div>
                     </fieldset>
 

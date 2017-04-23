@@ -51,7 +51,7 @@
                                   <c:forEach var="person" items="${personList}">
                                     <tr>
                                         <td>${person.fname} ${person.lname}</td>
-                                        <td>${person.emailId}<br>${person.emailId}</td>
+                                        <td>${person.emailId}<br>${person.phone}</td>
                                         <td>${person.status}</td>
                                         <td>${person.applicationDate}</td>
                                         <td><input type="button" id="cv-button" value="CV"/></td>
