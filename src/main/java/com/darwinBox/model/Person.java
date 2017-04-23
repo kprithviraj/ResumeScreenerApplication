@@ -18,6 +18,7 @@ public class Person {
 	private String status;
 	private Long applicationDate;
 	private String emailId;
+	private String cvType;
 
 	public String getId() {
 		return id;

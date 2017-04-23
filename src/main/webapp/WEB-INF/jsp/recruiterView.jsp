@@ -12,8 +12,10 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                $('#cv-button').click(function(ev){
-                    alert("Prithvi");
+                $('.cv-button').click(function(ev){
+                   var fileName = $(ev.currentTarget).attr('name');
+                   var location = '/getCV?fileName=' + fileName;
+                    window.open(location,'_blank');
                 });
 
 
@@ -54,7 +56,7 @@
                                         <td>${person.emailId}<br>${person.phone}</td>
                                         <td>${person.status}</td>
                                         <td>${person.applicationDate}</td>
-                                        <td><input type="button" id="cv-button" value="CV"/></td>
+                                        <td><input type='button' class="cv-button" name=${person.id}.${person.cvType}>A PDF Doc</a></td>
                                     </tr>
                                    </c:forEach>
 
