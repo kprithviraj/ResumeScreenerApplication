@@ -58,7 +58,6 @@ public class PersonController {
 
 	@RequestMapping("/recruiterView")
 	public ModelAndView recruiterView() {
-		System.out.println(personService.listPerson());
 		return new ModelAndView("recruiterView", "personList" , personService.listPerson());
 	}
 
@@ -95,8 +94,6 @@ public class PersonController {
 		String absoluteFilePath = context.getRealPath(relativeWebPath);
 		Integer i  = file.getOriginalFilename().lastIndexOf(".");
 		String extension = file.getOriginalFilename().substring(i+1,file.getOriginalFilename().toCharArray().length);
-		System.out.println(extension);
-		System.out.println(file.getSize());
 
 		Person person = new Person();
 		person.setFname(firstName);
@@ -125,7 +122,6 @@ public class PersonController {
 	public ResponseEntity<byte[]> getCV(@RequestParam("fileName") String fileName) {
 		HttpHeaders headers = new HttpHeaders();
 		InputStream in = context.getResourceAsStream("/resources/uploadedFiles/"+fileName);
-		System.out.println(fileName);
 		headers.setContentType(MediaType.parseMediaType("application/pdf"));
 		headers.add("content-disposition", "inline;filename=" + fileName);
 		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");

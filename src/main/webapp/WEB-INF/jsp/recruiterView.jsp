@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Upload Standards Data</title>
+        <title>Darwin Box</title>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
