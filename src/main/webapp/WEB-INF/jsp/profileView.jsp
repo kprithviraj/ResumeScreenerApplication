@@ -195,7 +195,6 @@
                   <br>
                   APPLICATION
                   <br>
-                  <br>
                   <br><br>FirstName : <span type="text" id="firstName"></span>
                   <br><br>LastName : <span type="text" id="lastName"></span>
                   <br><br>Email : <span type="text" id="emailId"></span>

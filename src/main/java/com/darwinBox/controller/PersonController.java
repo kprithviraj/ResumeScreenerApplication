@@ -92,11 +92,9 @@ public class PersonController {
 							 @RequestParam("phone") String phone,
 							 @RequestParam("file") MultipartFile file) {
 
-		String relativeWebPath = "resources/uploadedFiles/";
-		String absoluteFilePath = context.getRealPath(relativeWebPath);
 		Integer i  = file.getOriginalFilename().lastIndexOf(".");
 		String extension = file.getOriginalFilename().substring(i+1,file.getOriginalFilename().toCharArray().length);
-
+		try {
 		Person person = new Person();
 		person.setFname(firstName);
 		person.setLname(lastName);
@@ -107,17 +105,13 @@ public class PersonController {
 		person.setCvType(extension.toLowerCase());
 		String id  = personService.addPerson(person);
 		String finalName = id + "." + extension;
-		File uploadedFile = new File(absoluteFilePath, id + "." + extension );
-		try {
-			/*File newFile = new File(absoluteFilePath + "/" + id+"."+extension);
-			file.transferTo(newFile);*/
 
-			personService.uploadFileToAWSAndGetLink(personService.getFileFromMultipart(file), finalName);
-
+		personService.uploadFileToAWSAndGetLink(personService.getFileFromMultipart(file), finalName);
 		} catch (Exception e) {
-			System.out.println(e);
-			return "Error uploading the file, Please try again";
+			e.printStackTrace();
+			return "Registration Unsuccessful, please try again";
 		}
+
 		return "Successfully Saved";
 	}
 

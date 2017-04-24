@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Darwin Box</title>
+        <title>Recruiter View</title>
 
         <style>
             .glyphicon {
@@ -34,14 +34,19 @@
                             var applicationDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
                             var days = Math.round((new Date() - d)/(1000*60*60*24));
                             var finalDays = days == 0 ? "Today" : days + " day(s) ago";
-                            var fileUrl = "https://s3.ap-south-1.amazonaws.com/prithvirajk/"+ user.id+"."+user.cvType;
+                            var googleURL = "http://docs.google.com/gview?url=";
+                            var microsoftURL = "https://view.officeapps.live.com/op/view.aspx?src=";
+                            var amazonURL = "https://s3.ap-south-1.amazonaws.com/prithvirajk/";
+                            var fileName = user.id + "." + user.cvType;
+                            var googleOrMSURL = user.cvType == "pdf" ? googleURL : microsoftURL;
+                            var finalURL = googleOrMSURL + amazonURL + fileName + "&embedded=true";
                             $('<tr/>').appendTo(table)
                                 .append(
                                         '<td><b>'+user.fname + " " + user.lname
                                         +'</td><td><b>'+user.emailId + "<br> " + user.phone
                                         +'</td><td><b>'+user.status
-                                        +'</td><td><b>'+applicationDate + "<br>" + finalDays
-                                        +'</td><td><b>'+"<a class='glyphicon glyphicon-open-file' href=" + fileUrl + "></a>"
+                                        +'</td><td><b>'+applicationDate + "<br></b>" + finalDays
+                                        +'</td><td><b>'+"<a target='_blank' class='glyphicon glyphicon-open-file' href=" + finalURL + "></a>(" + user.cvType.toUpperCase() + ")"
                                 );
                             }
                     } //success

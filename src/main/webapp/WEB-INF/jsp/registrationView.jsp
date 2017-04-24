@@ -50,7 +50,7 @@
 
                         <div class="form-group col-md-12">
                             <label for="">Upload CV</label>
-                            <input class="btn" type= "file" name="file" id="file" type="text" name="filePath">
+                            <input class="btn" accept=".pdf, .doc, .docx" type= "file" name="file" id="file" type="text" name="filePath">
                         </div>
                     </fieldset>
 
@@ -82,7 +82,7 @@
             } else {
                 alert(validationString);
                 $('#register-button').removeClass("disabled");
-                return;
+                 event.preventDefault();
             }
         });
 
@@ -98,6 +98,23 @@
             if(!$("#email").val()){
                 return "Please enter a valid email id";
             }
+
+            if(isNaN($("#phone").val())){
+                return "Please enter a valid phone number";
+            }
+
+            if(!$("#file").val()){
+                return "Please choose a file";
+            } else {
+                var fileName = $("#file").val();
+                var i = fileName.lastIndexOf(".")+1;
+                var extension = fileName.substring(i);
+                if(!(extension.indexOf("pdf")>=0 || extension.indexOf("doc")>=0 || extension.indexOf("docx")>=0)){
+                    return "Please upload a valid doc/docx/pdf format file";
+                }
+            }
+
+
 
             return "success";
         }
