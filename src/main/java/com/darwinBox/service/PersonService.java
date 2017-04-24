@@ -1,14 +1,20 @@
 package com.darwinBox.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.darwinBox.model.Person;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -58,5 +64,27 @@ public class PersonService {
 		return null;
 	}
 
+	public String changeUserStatus(String userId, String status) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("id").is(userId));
+
+		Update update = new Update();
+		update.set("status", status);
+
+		mongoTemplate.updateFirst(query, update, Person.class);
+		return "Successfully Saved";
+	}
+
+	public List<String> getAllIdsOfPersons() {
+		List<String> allIds = new ArrayList<>();
+		Query q = new Query();
+		q.fields().include("id");
+		List<Person> listOfObjects = mongoTemplate.find(q, Person.class);
+
+		for(Person person : listOfObjects){
+			allIds.add(person.getId());
+		}
+		return allIds;
+	}
 }
 

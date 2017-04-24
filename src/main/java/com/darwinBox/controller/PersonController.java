@@ -65,8 +65,7 @@ public class PersonController {
 	@RequestMapping("/profileView")
 	public ModelAndView profileView() {
     	List<String> userIds = new ArrayList<>();
-    	userIds.add("e07ac117-fe36-4392-b92e-5270844faf65");
-    	userIds.add("e07ac117-fe36-4392-b92e-5270844faf66");
+    	userIds = personService.getAllIdsOfPersons();
     	String userIdString = StringUtils.collectionToCommaDelimitedString(userIds);
 
 		return new ModelAndView("profileView", "personList" , userIdString);
@@ -139,4 +138,12 @@ public class PersonController {
 		return response;
 	}
 
+
+	@RequestMapping(value = "/changeUserStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public String uploadFile(@RequestParam("userId") String userId,
+							 @RequestParam("status") String status){
+    	String message = personService.changeUserStatus(userId, status);
+		return message;
+	}
 }
