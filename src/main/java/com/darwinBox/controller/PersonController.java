@@ -108,7 +108,8 @@ public class PersonController {
 		File uploadedFile = new File(absoluteFilePath, id + "." + extension );
 
 		try {
-			uploadedFile.createNewFile();
+			File newFile = new File(absoluteFilePath + "/" + id+"."+extension);
+			file.transferTo(newFile);
 		} catch (IOException e) {
 			System.out.println(e);
 			return "Error uploading the file, Please try again";
