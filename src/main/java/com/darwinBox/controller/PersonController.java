@@ -1,6 +1,7 @@
 package com.darwinBox.controller;
 
 import com.darwinBox.model.Person;
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -58,7 +59,7 @@ public class PersonController {
 
 	@RequestMapping("/recruiterView")
 	public ModelAndView recruiterView() {
-		return new ModelAndView("recruiterView", "personList" , personService.listPerson());
+		return new ModelAndView("recruiterView");
 	}
 
 	@RequestMapping("/profileView")
@@ -141,5 +142,11 @@ public class PersonController {
 							 @RequestParam("status") String status){
     	String message = personService.changeUserStatus(userId, status);
 		return message;
+	}
+
+	@RequestMapping(value = "/getAllUsersList", method = RequestMethod.POST)
+	@ResponseBody
+	public String getAllUsersList(){
+		return personService.convertObjectToJSONString(personService.listPerson());
 	}
 }

@@ -12,13 +12,41 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                $.ajax({
+                    type: "POST",
+                    url: "/getAllUsersList",
+                    dataType : "text",
+                    error: function (e) {
+                        console.log(e);
+                        alert("An error occurred. Please refresh the page and try again.");
+                    },
+                    success: function (response) {
+                        var userData = JSON.parse(response);
+                        var table = $("#data-table");
+                        for(var i=0; i<userData.length ; i++){
+                            var user = userData[i];
+                            var d = new Date(user.applicationDate);
+                            var applicationDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
+                            var days = Math.round((new Date() - d)/(1000*60*60*24));
+                            var finalDays = days == 0 ? "Today" : days + " day(s) ago";
+                            $('<tr/>').appendTo(table)
+                                .append(
+                                        '<td><b>'+user.fname + " " + user.lname
+                                        +'</td><td><b>'+user.emailId + "<br> " + user.phone
+                                        +'</td><td><b>'+user.status
+                                        +'</td><td><b>'+applicationDate + "<br>" + finalDays
+                                        +'</td><td><b>'+"File Here"
+                                );
+                            }
+                    } //success
+                }); // end of ajax call
+
+
                 $('.cv-button').click(function(ev){
                    var fileName = $(ev.currentTarget).attr('name');
                    var location = '/getCV?fileName=' + fileName;
                     window.open(location,'_blank');
                 });
-
-
             }); //End of document ready
         </script>
     </head>
@@ -41,7 +69,7 @@
 
                         <fieldset>
                             <div class="container">
-                              <table class="table table-striped">
+                              <table id="data-table" class="table table-striped">
                                 <thead>
                                   <tr>
                                   <th>Firstname</th>
@@ -50,16 +78,6 @@
                                   <th>Application Date</th>
                                   <th>Application</th>
                                   </tr>
-                                  <c:forEach var="person" items="${personList}">
-                                    <tr>
-                                        <td>${person.fname} ${person.lname}</td>
-                                        <td>${person.emailId}<br>${person.phone}</td>
-                                        <td>${person.status}</td>
-                                        <td>${person.applicationDate}</td>
-                                        <td><input type='button' class="cv-button" name=${person.id}.${person.cvType}>A PDF Doc</a></td>
-                                    </tr>
-                                   </c:forEach>
-
                                 </thead>
                               </table>
                             </div>
@@ -70,5 +88,6 @@
 
             </div>
         </div>
+        <input type="hidden" id="allPersonData" value=${personList}></input>
     </body>
 </html>
