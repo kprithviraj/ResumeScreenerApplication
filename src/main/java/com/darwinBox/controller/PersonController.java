@@ -36,28 +36,6 @@ public class PersonController {
 	@Autowired
 	ServletContext context;
 
-    @RequestMapping(value = "/person", method = RequestMethod.GET)
-	public String getPersonList(ModelMap model) {  
-        model.addAttribute("personList", personService.listPerson());  
-        return "output";  
-    }  
-    
-    @RequestMapping(value = "/person/save", method = RequestMethod.POST)  
-	public View createPerson(@ModelAttribute Person person, ModelMap model) {
-    	if(StringUtils.hasText(person.getId())) {
-    		personService.updatePerson(person);
-    	} else {
-    		personService.addPerson(person);
-    	}
-    	return new RedirectView("/person");
-    }
-        
-    @RequestMapping(value = "/person/delete", method = RequestMethod.GET)  
-	public View deletePerson(@ModelAttribute Person person, ModelMap model) {  
-        personService.deletePerson(person);  
-        return new RedirectView("/person");
-    }
-
 	@RequestMapping("/recruiterView")
 	public ModelAndView recruiterView() {
 		return new ModelAndView("recruiterView");

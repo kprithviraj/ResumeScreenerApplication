@@ -46,7 +46,7 @@
                                         +'</td><td><b>'+user.emailId + "<br> " + user.phone
                                         +'</td><td><b>'+user.status
                                         +'</td><td><b>'+applicationDate + "<br></b>" + finalDays
-                                        +'</td><td><b>'+"<a target='_blank' class='glyphicon glyphicon-open-file' href=" + finalURL + "></a>(" + user.cvType.toUpperCase() + ")"
+                                        +'</td><td>'+"<a target='_blank' class='glyphicon glyphicon-open-file' href=" + finalURL + "></a>(" + user.cvType.toUpperCase() + ")"
                                 );
                             }
                     } //success
@@ -63,13 +63,19 @@
     </head>
 
     <body class="white-bg ">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-    	<div class="navbar-header">
-    		<a class="navbar-brand">Recruiters View</a>
-    	</div>
-      </div>
-    </nav>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div clas="row">
+            <div class="col-xs-8"
+            <div class="navbar-header">
+            <a href="/recruiterView" class="navbar-brand">Recruiters View</a>
+            </div>
+            <div class="col-xs-4">
+            <a href="/profileView" class="navbar-brand">Individual Profile View</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
     <div class="container">
             <div class="row">
