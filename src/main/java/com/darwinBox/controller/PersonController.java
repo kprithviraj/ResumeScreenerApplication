@@ -21,6 +21,7 @@ import com.darwinBox.service.PersonService;
 
 import javax.servlet.ServletContext;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -105,12 +106,15 @@ public class PersonController {
 		person.setStatus("SCREENING");
 		person.setCvType(extension.toLowerCase());
 		String id  = personService.addPerson(person);
+		String finalName = id + "." + extension;
 		File uploadedFile = new File(absoluteFilePath, id + "." + extension );
-
 		try {
-			File newFile = new File(absoluteFilePath + "/" + id+"."+extension);
-			file.transferTo(newFile);
-		} catch (IOException e) {
+			/*File newFile = new File(absoluteFilePath + "/" + id+"."+extension);
+			file.transferTo(newFile);*/
+
+			personService.uploadFileToAWSAndGetLink(personService.getFileFromMultipart(file), finalName);
+
+		} catch (Exception e) {
 			System.out.println(e);
 			return "Error uploading the file, Please try again";
 		}
@@ -150,4 +154,7 @@ public class PersonController {
 	public String getAllUsersList(){
 		return personService.convertObjectToJSONString(personService.listPerson());
 	}
+
+
+
 }

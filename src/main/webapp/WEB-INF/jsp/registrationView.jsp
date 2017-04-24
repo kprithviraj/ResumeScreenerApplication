@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 </head>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -76,11 +75,13 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#register-button').click(function(ev){
+            $('#register-button').addClass("disabled");
             var validationString = areInputsValid();
             if(validationString === "success"){
 
             } else {
                 alert(validationString);
+                $('#register-button').removeClass("disabled");
                 return;
             }
         });

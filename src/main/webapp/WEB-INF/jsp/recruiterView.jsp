@@ -6,10 +6,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Darwin Box</title>
 
+        <style>
+            .glyphicon {
+              font-size: xx-large
+            }
+        </style>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
                 $.ajax({
@@ -29,13 +34,14 @@
                             var applicationDate = d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear();
                             var days = Math.round((new Date() - d)/(1000*60*60*24));
                             var finalDays = days == 0 ? "Today" : days + " day(s) ago";
+                            var fileUrl = "https://s3.ap-south-1.amazonaws.com/prithvirajk/"+ user.id+"."+user.cvType;
                             $('<tr/>').appendTo(table)
                                 .append(
                                         '<td><b>'+user.fname + " " + user.lname
                                         +'</td><td><b>'+user.emailId + "<br> " + user.phone
                                         +'</td><td><b>'+user.status
                                         +'</td><td><b>'+applicationDate + "<br>" + finalDays
-                                        +'</td><td><b>'+"File Here"
+                                        +'</td><td><b>'+"<a class='glyphicon glyphicon-open-file' href=" + fileUrl + "></a>"
                                 );
                             }
                     } //success

@@ -49,15 +49,21 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                var model = model = "${personList}";
-                var userIds = model.split(",");
-                var currentUserId = "";
-                $('#previous-button').hide();
+                var model = "${personList}";
+                if(!!model) {
+                    var userIds = model.split(",");
+                    var currentUserId = "";
 
-                populateDataWithUserId(userIds[0]);
+                    $('#previous-button').hide();
+
+                    if(userIds.length){
+                        populateDataWithUserId(userIds[0]);
+                    }
+                }else {
+                    alert("No user present in the database");
+                }
 
                 $('#previous-button').click(function(ev){
                     if(!!currentUserId){
@@ -92,6 +98,8 @@
                 });
 
                 function populateDataWithUserId(userId){
+                    if(!!userId){
+                    $("#resumeIframe").attr("src", "");
                     $.ajax({
                         type: "POST",
                         url: "/getDataById",
@@ -104,18 +112,30 @@
                         success: function (response) {
                             var person = JSON.parse(response);
                             currentUserId = person.id;
+                            var googleURL = "http://docs.google.com/gview?url=";
+                            var microsoftURL = "https://view.officeapps.live.com/op/view.aspx?src=";
+                            var amazonURL = "https://s3.ap-south-1.amazonaws.com/prithvirajk/";
+                            var fileName = person.id + "." + person.cvType;
+                            var googleOrMSURL = person.cvType == "pdf" ? googleURL : microsoftURL;
+                            var finalURL = googleOrMSURL + amazonURL + fileName + "&embedded=true";
                             $("#firstName").text(person.fname);
                             $("#lastName").text(person.lname);
                             $("#emailId").text(person.emailId);
                             $("#phone").text(person.phone);
+                            $("#status").text(person.status);
                             $("#userId").val(person.id);
+                            $("#resumeIframe").attr("src", finalURL);
                             resetShortListAndRejectButtons();
                         }
                     }); // end of ajax call
+
+                    }
+
                 } // End of function populateDataWithUserId
 
                 function changeUserStatus(status){
                     var userId = $("#userId").val();
+                     if(!!userId){
                      $.ajax({
                          type: "POST",
                          url: "/changeUserStatus",
@@ -133,6 +153,10 @@
                              }
                          }
                      }); // end of ajax call
+                     } else{
+                        resetShortListAndRejectButtons();
+                     }
+
                 }//End of changeUserStatus
 
                 function resetShortListAndRejectButtons(){
@@ -142,11 +166,13 @@
                  $("#reject-button").removeClass('disabled');
                  $('#previous-button').show();
                  $('#next-button').show();
-                  if(userIds.indexOf(currentUserId)===0){
-                     $('#previous-button').hide();
-                  }
-                  if(userIds.length-1 == userIds.indexOf(currentUserId)){
-                      $('#next-button').hide();
+                  if(userIds && userIds.length>0){
+                      if(userIds.indexOf(currentUserId)===0){
+                         $('#previous-button').hide();
+                      }
+                      if(userIds.length-1 == userIds.indexOf(currentUserId)){
+                          $('#next-button').hide();
+                      }
                   }
 
                 }
@@ -159,7 +185,7 @@
     <div class="container">
         <div class="row">
             <div id="resume-div" class="col-md-8">
-                <iframe src="//docs.google.com/gview?url=resources/uploadedFiles/prithvi.pdf&embedded=true"></iframe>
+                <iframe id="resumeIframe" src="about:blank" width="600" height="600"></iframe>
             </div>
             <div id="actions-div" class="col-md-4">
                   <button id="shortlist-button" class="btn btn-outlined btn-success status-button">SHORTLIST</button>
@@ -174,6 +200,7 @@
                   <br><br>LastName : <span type="text" id="lastName"></span>
                   <br><br>Email : <span type="text" id="emailId"></span>
                   <br><br>Phone: <span type="text" id="phone"></span>
+                  <br><br>Status: <span type="text" id="status"></span>
                   <input type="hidden" id="userId"></input>
 
                   <br>

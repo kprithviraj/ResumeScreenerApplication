@@ -1,9 +1,17 @@
 package com.darwinBox.service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
+import com.darwinBox.controller.Credentials;
 import com.darwinBox.model.Person;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -16,6 +24,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Repository
 public class PersonService {
@@ -85,6 +94,28 @@ public class PersonService {
 			allIds.add(person.getId());
 		}
 		return allIds;
+	}
+
+	public File getFileFromMultipart(MultipartFile file) throws IOException {
+		File convFile = new File(file.getOriginalFilename());
+		convFile.createNewFile();
+		FileOutputStream fos = new FileOutputStream(convFile);
+		fos.write(file.getBytes());
+		fos.close();
+		return convFile;
+	}
+
+	public String uploadFileToAWSAndGetLink(File file, String fileName) throws Exception {
+		String link = "";
+
+		BasicAWSCredentials awsCreds = new BasicAWSCredentials(Credentials.access_key_id, Credentials.secret_access_key);
+
+		AmazonS3Client s3Client = new AmazonS3Client(awsCreds);
+
+		PutObjectRequest putRequest = new PutObjectRequest("prithvirajk", fileName, file).withCannedAcl(CannedAccessControlList.PublicRead);
+		PutObjectResult response = s3Client.putObject(putRequest);
+
+		return link;
 	}
 }
 
