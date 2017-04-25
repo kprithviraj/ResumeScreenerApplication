@@ -112,6 +112,7 @@
                              } else {
                                 $("#reject-button").text(status);
                              }
+                              $("#status").text(status);
                          }
                      }); // end of ajax call
                      } else{
