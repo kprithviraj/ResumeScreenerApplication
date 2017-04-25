@@ -1,7 +1,6 @@
 package com.darwinBox.controller;
 
 import com.darwinBox.model.Person;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,19 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.darwinBox.service.PersonService;
 
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -84,7 +78,7 @@ public class PersonController {
 		String id  = personService.addPerson(person);
 		String finalName = id + "." + extension;
 
-		personService.uploadFileToAWSAndGetLink(personService.getFileFromMultipart(file), finalName);
+		personService.uploadFileToAWS(personService.getFileFromMultipart(file), finalName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Registration Unsuccessful, please try again";

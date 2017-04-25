@@ -6,47 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Profile View</title>
 
-        <style>
-          .border {
-              border: 1px solid #dddddd;
-              position: relative;
-          }
-          .left-arrow, .right-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: xx-large;
-          }
-          .left-arrow {
-                left: 10px;
-          }
-          .right-arrow {
-                right: 10px;
-          }
-
-          .btn-outlined.btn-danger {
-              background: none;
-              border: 3px solid #d9534f;
-              color: #d9534f;
-          }
-          .btn-outlined.btn-danger:hover,
-          .btn-outlined.btn-danger:active {
-              color: #FFF;
-              background: #d2322d;
-          }
-
-          .btn-outlined.btn-success {
-              background: none;
-              border: 3px solid #5cb85c;
-              color: #5cb85c;
-          }
-          .btn-outlined.btn-success:hover,
-          .btn-outlined.btn-success:active {
-              color: #FFF;
-              background: #47a447;
-          }
-        </style>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/resources/core/css/profileview.css">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript">
@@ -182,7 +143,7 @@
     </head>
 
     <body class="white-bg ">
-    <div class="container">
+    <div class="container m-t-lg">
         <div class="row">
             <div id="resume-div" class="col-md-8">
                 <iframe id="resumeIframe" src="about:blank" width="600" height="600"></iframe>

@@ -46,14 +46,6 @@ public class PersonService {
 	public List<Person> listPerson() {
 		return mongoTemplate.findAll(Person.class, COLLECTION_NAME);
 	}
-	
-	public void deletePerson(Person person) {
-		mongoTemplate.remove(person, COLLECTION_NAME);
-	}
-	
-	public void updatePerson(Person person) {
-		mongoTemplate.insert(person, COLLECTION_NAME);		
-	}
 
 	public Person findPersonWithId(String currentUserId) {
 		return mongoTemplate.findById(currentUserId, Person.class);
@@ -105,8 +97,7 @@ public class PersonService {
 		return convFile;
 	}
 
-	public String uploadFileToAWSAndGetLink(File file, String fileName) throws Exception {
-		String link = "";
+	public void uploadFileToAWS(File file, String fileName) throws Exception {
 
 		BasicAWSCredentials awsCreds = new BasicAWSCredentials(Credentials.access_key_id, Credentials.secret_access_key);
 
@@ -115,7 +106,6 @@ public class PersonService {
 		PutObjectRequest putRequest = new PutObjectRequest("prithvirajk", fileName, file).withCannedAcl(CannedAccessControlList.PublicRead);
 		PutObjectResult response = s3Client.putObject(putRequest);
 
-		return link;
 	}
 }
 
